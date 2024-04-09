@@ -42,6 +42,9 @@ export function scenario_1() {
     })
     check(response, { 'status equals 200': response => response.status.toString() === '200' })
 
+    const user = response.json()
+    console.log(user.id)
+
     // lista de recursos
     response = http.get('https://jsonplaceholder.typicode.com/posts', {
       headers: {
@@ -55,7 +58,7 @@ export function scenario_1() {
     // crear recurso
     response = http.post(
       'https://jsonplaceholder.typicode.com/posts',
-      '[\r\n  {\r\n    "userId": 1,\r\n    "id": 1,\r\n    "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",\r\n    "body": "quia et suscipit\\nsuscipit recusandae consequuntur expedita et cum\\nreprehenderit molestiae ut ut quas totam\\nnostrum rerum est autem sunt rem eveniet architecto"\r\n  }\r\n]\r\n',
+      '[\r\n  {\r\n    "userId": ${user.id},\r\n    "id": 1,\r\n    "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",\r\n    "body": "quia et suscipit\\nsuscipit recusandae consequuntur expedita et cum\\nreprehenderit molestiae ut ut quas totam\\nnostrum rerum est autem sunt rem eveniet architecto"\r\n  }\r\n]\r\n',
       {
         headers: {
           Accept: '*/*',
