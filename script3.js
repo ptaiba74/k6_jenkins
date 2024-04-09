@@ -1,6 +1,7 @@
 import { sleep, check, group } from 'k6'
 import http from 'k6/http'
 
+
 export const options = {
   ext: {
     loadimpact: {
@@ -31,8 +32,11 @@ export const options = {
 export function scenario_1() {
   let response
 
-  group('Rest Service', function () {
-    // obtener recurso
+  group('obtener recurso', function () {
+    
+    
+   
+       // obtener recurso
     response = http.get('https://jsonplaceholder.typicode.com/posts/1', {
       headers: {
         Accept: '*/*',
@@ -43,8 +47,12 @@ export function scenario_1() {
     check(response, { 'status equals 200': response => response.status.toString() === '200' })
 
     const user = response.json()
-    console.log(user.id)
+    
+    });
+    
 
+    
+    group('lista de recursos', function () { 
     // lista de recursos
     response = http.get('https://jsonplaceholder.typicode.com/posts', {
       headers: {
@@ -54,7 +62,9 @@ export function scenario_1() {
       },
     })
     check(response, { 'status equals 200': response => response.status.toString() === '200' })
-
+    });
+    
+    group('crear recurso', function () { 
     // crear recurso
     response = http.post(
       'https://jsonplaceholder.typicode.com/posts',
@@ -69,7 +79,7 @@ export function scenario_1() {
       }
     )
     check(response, { 'status equals 200': response => response.status.toString() === '200' })
-  })
+  });
 
   // Automatically added sleep
   sleep(1)
